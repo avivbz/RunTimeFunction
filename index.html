@@ -1,0 +1,818 @@
+﻿<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>סיבוכיות זמן ריצה - אתר אינטראקטיבי</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #3498db;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+
+        .slide {
+            display: none;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            background-color: white;
+        }
+
+            .slide.active {
+                display: block;
+            }
+
+        .question {
+            color: #e74c3c;
+            font-weight: bold;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+
+            .feedback.correct {
+                background-color: #dff0d8;
+                color: #3c763d;
+            }
+
+            .feedback.incorrect {
+                background-color: #f2dede;
+                color: #a94442;
+            }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        button, input[type="button"], input[type="submit"] {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+            button:hover, input[type="button"]:hover, input[type="submit"]:hover {
+                background-color: #2980b9;
+            }
+
+        input[type="text"], input[type="number"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f8f8f8;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+            border: 1px solid #ddd;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .progress-container {
+            width: 100%;
+            background-color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            height: 20px;
+            background-color: #3498db;
+            text-align: center;
+            line-height: 20px;
+            color: white;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #3498db;
+            color: white;
+        }
+
+        .solution-button {
+            background-color: #27ae60;
+        }
+
+            .solution-button:hover {
+                background-color: #219955;
+            }
+
+        .solution {
+            display: none;
+            background-color: #d9f9e6;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border: 1px solid #a3e0c1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>סיבוכיות זמן ריצה</h1>
+            <p>אתר אינטראקטיבי ללימוד יעילות אלגוריתמים וסיבוכיות זמן ריצה</p>
+        </header>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar" style="width: 0%">0%</div>
+        </div>
+
+        <!-- שקף 1 -->
+        <div class="slide active" id="slide1">
+            <h2>יעילות אלגוריתמים וסיבוכיות זמן ריצה</h2>
+            <p>ברוכים הבאים ללימוד הנושא של יעילות אלגוריתמים וסיבוכיות זמן ריצה.</p>
+            <p>בשיעור זה נלמד כיצד מודדים את היעילות של אלגוריתמים ונבין את המשמעות של סיבוכיות זמן ריצה.</p>
+        </div>
+
+        <!-- שקף 2 -->
+        <div class="slide" id="slide2">
+            <h2>בעיות, פתרונות ויעילות</h2>
+            <p>כיצד אנו מודדים את היעילות של אלגוריתמים? מדוע זה חשוב?</p>
+            <div style="text-align: center; margin: 20px 0;">
+                <img src="/api/placeholder/400/250" alt="תמונת Waze" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <p style="font-style: italic; margin-top: 8px;">אפליקציית Waze משתמשת באלגוריתמים יעילים לחישוב מסלולים</p>
+            </div>
+            <div class="question">
+                <p>רגע, איך Waze קשור כאן?</p>
+                <textarea id="q2_answer" rows="3" placeholder="הקלד את תשובתך כאן..."></textarea>
+                <button onclick="checkAnswer('q2')">בדוק תשובה</button>
+                <div id="q2_feedback" class="feedback"></div>
+                <button class="solution-button" onclick="showSolution('q2_solution')">הצג פתרון</button>
+                <div id="q2_solution" class="solution">
+                    <p>Waze משתמשת באלגוריתמים לחיפוש מסלולים קצרים. היעילות של האלגוריתמים הללו קריטית כדי למצוא את המסלול המהיר ביותר בזמן אמת. אם האלגוריתם לא יעיל, הוא עלול לקחת זמן רב מדי לחישוב, וזה לא מעשי עבור אפליקציית ניווט בזמן אמת.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- שקף 3 -->
+        <div class="slide" id="slide3">
+            <h2>תכנון מסלול טיול</h2>
+            <p>עליכם לתכנן מסלול העובר בכל האתרים. המסלול מתחיל ונגמר בבית האופרה.</p>
+            <div style="text-align: center; margin: 20px 0;">
+                <img src="/api/placeholder/450/300" alt="תרשים מסלולי טיול" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <p style="font-style: italic; margin-top: 8px;">תרשים של המסלולים האפשריים בין האתרים השונים</p>
+            </div>
+            <div class="question">
+                <p>מהו המסלול הקצר ביותר?</p>
+                <textarea id="q3_answer" rows="3" placeholder="הקלד את תשובתך כאן..."></textarea>
+                <button onclick="checkAnswer('q3')">בדוק תשובה</button>
+                <div id="q3_feedback" class="feedback"></div>
+                <button class="solution-button" onclick="showSolution('q3_solution')">הצג פתרון</button>
+                <div id="q3_solution" class="solution">
+                    <p>זוהי בעיית "הסוכן הנוסע" (Traveling Salesman Problem) - בעיה מפורסמת במדעי המחשב. המטרה היא למצוא מסלול המתחיל בנקודה מסוימת, עובר בכל הנקודות פעם אחת בדיוק, וחוזר לנקודת ההתחלה, כך שהמרחק הכולל יהיה מינימלי. בעיה זו ידועה כבעיה NP-קשה, כלומר אין אלגוריתם יעיל (פולינומיאלי) הידוע לפתרון מדויק שלה עבור מקרה כללי.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- שקף 4 -->
+        <div class="slide" id="slide4">
+            <h2>מספר המסלולים</h2>
+            <p>נניח וישנם 10 אתרים. מכל אתר ניתן להגיע לכל אתר אחר.</p>
+            <ul>
+                <li>מנקודת המוצא, יש לכל היותר 9 אתרים שניתן להגיע.</li>
+                <li>נניח הגענו לנקודה a1. מהנקודה a1 יש לכל היותר 8 אתרים שניתן להגיע. נניח הגענו לנקודה a2.</li>
+                <li>מהנקודה a2 יש לכל היותר 7 אתרים. וכן הלאה...</li>
+                <li>כלומר מספר במסלולים האפשריים עבור 10 אתרים הוא: 9*8*7*6*5*4*3*2*1</li>
+            </ul>
+            <div class="question">
+                <p>נניח וישנם n אתרים. כמה מסלולים אפשריים יש?</p>
+                <input type="test" id="q4_answer" placeholder="הקלד את תשובתך כאן...">
+                <button onclick="checkAnswer('q4')">בדוק תשובה</button>
+                <div id="q4_feedback" class="feedback"></div>
+                <button class="solution-button" onclick="showSolution('q4_solution')">הצג פתרון</button>
+                <div id="q4_solution" class="solution">
+                    <p>עבור n אתרים, מספר המסלולים האפשריים הוא (n-1)! (עצרת).</p>
+                    <p>הסבר: מנקודת המוצא יש (n-1) אפשרויות. מהנקודה הראשונה יש (n-2) אפשרויות וכן הלאה. כפל כל האפשרויות נותן לנו (n-1)!</p>
+                </div>
+            </div>
+
+                
+        </div>
+      
+
+    <!-- שקף 5 -->
+    <div class="slide" id="slide5">
+        <h2>מספר מסלולים אפשריים</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>מספר האתרים</th>
+                    <th>מספר המסלולים</th>
+                    <th>זמן החישוב – מחשב שיכול לחשב 10 מיליון מסלולים בשנייה</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>6</td>
+                    <td>120</td>
+                    <td>הרבה פחות משניה</td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td>?</td>
+                    <td>?</td>
+                </tr>
+                <tr>
+                    <td>13</td>
+                    <td>?</td>
+                    <td>?</td>
+                </tr>
+                <tr>
+                    <td>16</td>
+                    <td>?</td>
+                    <td>?</td>
+                </tr>
+                <tr>
+                    <td>18</td>
+                    <td>?</td>
+                    <td>?</td>
+                </tr>
+                <tr>
+                    <td>21</td>
+                    <td>?</td>
+                    <td>?</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="question">
+            <p>השלימו את הטבלה לחישוב כמות המסלולים כתלות במספר האתרים ואת זמן החישוב בשניות</p>
+            <p>עבור 11 אתרים, מספר המסלולים הוא:</p>
+            <input type="text" id="q5_1_answer" placeholder="הקלד את תשובתך כאן...">
+            <p>זמן החישוב עבור 11 אתרים (בשניות):</p>
+            <input type="text" id="q5_2_answer" placeholder="הקלד את תשובתך כאן...">
+            <button onclick="checkAnswer('q5')">בדוק תשובה</button>
+            <div id="q5_feedback" class="feedback"></div>
+            <button class="solution-button" onclick="showSolution('q5_solution')">הצג פתרון</button>
+            <div id="q5_solution" class="solution">
+                <p>עבור 11 אתרים: מספר המסלולים הוא 10! = 3,628,800</p>
+                <p>זמן החישוב: 3,628,800 / 10,000,000 = 0.36 שניות בערך</p>
+                <p>הטבלה המלאה:</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>מספר האתרים</th>
+                            <th>מספר המסלולים</th>
+                            <th>זמן החישוב</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>6</td>
+                            <td>120</td>
+                            <td>הרבה פחות משניה</td>
+                        </tr>
+                        <tr>
+                            <td>11</td>
+                            <td>3,628,800</td>
+                            <td>0.36 שניות בערך</td>
+                        </tr>
+                        <tr>
+                            <td>13</td>
+                            <td>479,001,600</td>
+                            <td>48 שניות</td>
+                        </tr>
+                        <tr>
+                            <td>16</td>
+                            <td>1,307,674,368,000</td>
+                            <td>36 שעות</td>
+                        </tr>
+                        <tr>
+                            <td>18</td>
+                            <td>~355,000,000,000,000</td>
+                            <td>410 ימים – יותר משנה</td>
+                        </tr>
+                        <tr>
+                            <td>21</td>
+                            <td>~2,430,000,000,000,000,000</td>
+                            <td>כ-7700 שנים</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- שקף 6 -->
+    <div class="slide" id="slide6">
+        <h2>מספר מסלולים אפשריים - פתרון</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>מספר האתרים</th>
+                    <th>מספר המסלולים</th>
+                    <th>זמן החישוב – מחשב שיכול לחשב 10 מיליון מסלולים בשנייה</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>6</td>
+                    <td>120</td>
+                    <td>הרבה פחות משניה</td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td>3,628,800</td>
+                    <td>0.36 שניות בערך</td>
+                </tr>
+                <tr>
+                    <td>13</td>
+                    <td>479,001,600</td>
+                    <td>48 שניות</td>
+                </tr>
+                <tr>
+                    <td>16</td>
+                    <td>1,307,674,368,000</td>
+                    <td>36 שעות</td>
+                </tr>
+                <tr>
+                    <td>18</td>
+                    <td>~355,000,000,000,000</td>
+                    <td>410 ימים – יותר משנה</td>
+                </tr>
+                <tr>
+                    <td>21</td>
+                    <td>~2,430,000,000,000,000,000</td>
+                    <td>כ-7700 שנים</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="question">
+            <p>נסח שאלה לכלי בינה מלאכותית כלשהו, על מנת לקבל הסבר כיצד האלגוריתם של חיפוש מסלול קצר עובד בתוכנת Waze. דאג/י שההסבר יוצג בצורה ברורה. שאל/י שאלות המשך עבור כל דבר שלא מובן לך</p>
+            <textarea id="q6_answer" rows="4" placeholder="הקלד את תשובתך כאן..."></textarea>
+            <button onclick="checkAnswer('q6')">בדוק תשובה</button>
+            <div id="q6_feedback" class="feedback"></div>
+            <button class="solution-button" onclick="showSolution('q6_solution')">הצג פתרון</button>
+            <div id="q6_solution" class="solution">
+                <p>דוגמה לשאלה טובה: "האם תוכל להסביר בצורה ברורה ומפורטת כיצד עובד האלגוריתם של חיפוש מסלול קצר בתוכנת Waze? אילו אלגוריתמים משמשים את Waze ומדוע הם יעילים יותר מחיפוש מלא של כל המסלולים האפשריים? אשמח אם תוכל לכלול בהסבר גם התייחסות לשיקולים מעשיים כמו עומסי תנועה ומידע בזמן אמת."</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- שקף 7 (חלק 2 שקף 1) -->
+    <div class="slide" id="slide7">
+        <h2>איך מודדים?</h2>
+        <ul>
+            <li><strong>איך לא?</strong> - לא מודדים זמן לפי שעון. (מדד הזה אינו אוביקטיבי)</li>
+            <li><strong>איך כן?</strong> - סופרים את מספר הצעדים הבסיסים (פעולות יסוד) שמבצע האלגוריתם:</li>
+            <ul>
+                <li>קלט/פלט</li>
+                <li>השמה (למשל - sum=0)</li>
+                <li>פעולות חישוב (למשל i++ או sum=sum+ar[i])</li>
+                <li>בדיקת תנאי בוליאני (למשל – x<10 או i<arr.Length)</li>
+            </ul>
+        </ul>
+    </div>
+
+    <!-- שקף 8 (חלק 2 שקף 2) -->
+    <div class="slide" id="slide8">
+        <h2>מדידת יעילות</h2>
+        <p>בשקף זה נלמד על מדידת יעילות של אלגוריתמים באמצעות ספירת פעולות יסוד.</p>
+    </div>
+
+    <!-- שקף 9 (חלק 2 שקף 3) -->
+    <div class="slide" id="slide9">
+        <h2>דוגמה לפונקציית זמן ריצה של פעולה המחשבת סכום של k איברים במערך</h2>
+        <div class="code">
+            public static int SumArray (int[] arr, int k)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;int sum = 0;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (int i = 0; i < k; i++)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sum = sum + arr[i];<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return sum;<br>
+            }
+        </div>
+        <p>פעולת יסוד 1: <code>int sum = 0;</code> - פעולה אחת</p>
+        <p>פעולת יסוד 2: <code>i < k</code> - k+1 פעולות (k פעמים + בדיקה נוספת בסוף)</p>
+        <p>פעולת יסוד 3: <code>sum = sum + arr[i]; i++</code> - 2k פעולות (2 פעולות × k פעמים)</p>
+        <p>סה"כ: 1 + (k+1) + 2k = 3k + 2 פעולות</p>
+        <p>כאשר k = n (גודל הקלט), פונקציית זמן הריצה היא: f(n) = 3n + 2</p>
+    </div>
+
+    <!-- שקף 10 (חלק 2 שקף 4) -->
+    <div class="slide" id="slide10">
+        <h2>דוגמא 2: חיפוש במערך ממוין בסדר עולה</h2>
+        <div class="code">
+            public static int Search1 (int[] arr, int item)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;int n = arr.Length;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (int i = 0; i < n; i++)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (arr[i] == item)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return i;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;return -1;<br>
+            }
+        </div>
+        <p>פעולה: 3n+2 פעולות לכל היותר</p>
+        <div class="question">
+            <p>מהי פונקציית זמן הריצה עבור מערך בגודל n, במקרה שהערך של item לא נמצא במערך?</p>
+            <input type="text" id="q10_answer" placeholder="הקלד את תשובתך כאן...">
+            <button onclick="checkAnswer('q10')">בדוק תשובה</button>
+            <div id="q10_feedback" class="feedback"></div>
+            <button class="solution-button" onclick="showSolution('q10_solution')">הצג פתרון</button>
+            <div id="q10_solution" class="solution">
+                <p>במקרה הגרוע ביותר (כשהערך לא נמצא במערך), נצטרך לעבור על כל איברי המערך, ולכן פונקציית זמן הריצה תהיה O(n), כלומר 3n+2 פעולות.</p>
+                <p>ההסבר המפורט:</p>
+                <ul>
+                    <li>פעולה אחת להשמה: <code>int n = arr.Length;</code></li>
+                    <li>n+1 פעולות לבדיקת התנאי: <code>i < n</code> (n פעמים + בדיקה אחרונה שמפסיקה את הלולאה)</li>
+                    <li>n פעולות להגדלת i: <code>i++</code></li>
+                    <li>n פעולות לבדיקת התנאי: <code>arr[i] == item</code></li>
+                    <li>פעולה אחת לביצוע: <code>return -1;</code></li>
+                </ul>
+                <p>סה"כ: 1 + (n+1) + n + n + 1 = 3n+3</p>
+                <p>לעתים נוהגים לכתוב 3n+2 כי לא סופרים את הפעולה האחרונה (return).</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- שקף 11 (חלק 2 שקף 5) -->
+    <div class="slide" id="slide11">
+        <h2>משימה</h2>
+        <p>נתחו את היעילות של הפעולה:</p>
+        <p>הפעולה שלפניכם מקבלת שני מערכים שגודלם n. כל האיברים במערך הראשון שונים זה מזה. הפעולה תדפיס את כל המספרים מהמערך הראשון המופיעים במערך השני, וכמה פעמים הם מופיעים בו.</p>
+        <p>לשם כך, נעבור על כל איבר במערך הראשון ונבדוק האם הוא מופיע במערך השני ונמנה את מספר מופעיו.</p>
+        <div class="code">
+            public static void SharedNums(int[] arr1, int[] arr2)<br>
+            {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;int counter;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;for (int i = 0; i < arr1.Length; i++)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counter = 0;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (int j = 0; j < arr2.Length; j++)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (arr1[i] == arr2[j])<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counter++;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (counter > 0)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Console.WriteLine(arr1[i] + " appears " + counter + " times");<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            }
+        </div>
+        <div class="question">
+            <p>מהי סיבוכיות זמן הריצה של הפעולה הזו?</p>
+            <input type="text" id="q11_answer" placeholder="הקלד את תשובתך כאן...">
+            <button onclick="checkAnswer('q11')">בדוק תשובה</button>
+            <div id="q11_feedback" class="feedback"></div>
+            <button class="solution-button" onclick="showSolution('q11_solution')">הצג פתרון</button>
+            <div id="q11_solution" class="solution">
+                <p>סיבוכיות זמן הריצה של הפעולה היא O(n²).</p>
+                <p>ניתוח מפורט:</p>
+                <ul>
+                    <li>הלולאה החיצונית רצה n פעמים (גודל arr1).</li>
+                    <li>בכל איטרציה של הלולאה החיצונית, הלולאה הפנימית רצה n פעמים (גודל arr2).</li>
+                    <li>סך הכל, תנאי ה-if הפנימי נבדק n×n = n² פעמים.</li>
+                    <li>פעולות נוספות כמו אתחול counter והדפסה הן O(n) במקרה הגרוע.</li>
+                    <li>לכן, הסיבוכיות הכוללת היא O(n²).</li>
+                </ul>
+            </div>
+        </div>
+        </div>
+        <!-- שקף 12 (חלק 2 שקף 6) -->
+            <div class="slide" id="slide12">
+                <h2>שיפור בקבוע</h2>
+                <div class="code">
+                    public static int Search1(int[] arr, int k)<br>
+                    {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;int n = arr.Length;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;for (int i = 0; i < n; i++)<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (arr[i] == k)<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return i;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return -1;<br>
+                    }
+                </div>
+                <p>ניתן לוותר על האתחול ולחסוך פעולה אחת</p>
+                <div class="question">
+                    <p>איך ניתן לשפר את הקוד כדי לחסוך את פעולת האתחול?</p>
+                    <textarea id="q12_answer" rows="4" placeholder="הקלד את תשובתך כאן..."></textarea>
+                    <button onclick="checkAnswer('q12')">בדוק תשובה</button>
+                    <div id="q12_feedback" class="feedback"></div>
+                    <button class="solution-button" onclick="showSolution('q12_solution')">הצג פתרון</button>
+                    <div id="q12_solution" class="solution">
+                        <div class="code">
+                            public static int Search1(int[] arr, int k)<br>
+                            {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;for (int i = 0; i < arr.Length; i++)<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (arr[i] == k)<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return i;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;return -1;<br>
+                            }
+                        </div>
+                        <p>במקום לאחסן את אורך המערך במשתנה נפרד `n`, ניתן לגשת ישירות לתכונה `Length` של המערך בתנאי הלולאה. זה חוסך פעולת השמה אחת, אך סיבוכיות הזמן נשארת O(n).</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- שקף 13 (חלק 2 שקף 7) -->
+            <div class="slide" id="slide13">
+                <h2>שיפור</h2>
+                <div class="code">
+                    7 6 5 4 3 2 1 0<br>
+                    6 4 5 1 1 7 1 4 9 2
+                </div>
+                <p>הרעיון בפעולה זו הוא לוודא שבטוח הפעולה תמצא הערך:</p>
+                <ul>
+                    <li>נבדוק האם הערך שמחפשים נמצא בתא האחרון.</li>
+                    <li>אם לא נשמור את הערך של התא האחרון. נשים במקומו את הערך שמחפשים.</li>
+                    <li>לולאת while עוברת עד שנמצא הערך.</li>
+                    <li>אם הערך נמצא בתא האחרון זה אומר שבמערך המקורי הערך שמחפשים לא היה.</li>
+                </ul>
+                <div class="question">
+                    <p>מהי פונקציית זמן הריצה של פעולה זו עבור מערך בגודל n?</p>
+                    <textarea id="q13_answer" rows="3" placeholder="הקלד את תשובתך כאן..."></textarea>
+                    <button onclick="checkAnswer('q13')">בדוק תשובה</button>
+                    <div id="q13_feedback" class="feedback"></div>
+                    <button class="solution-button" onclick="showSolution('q13_solution')">הצג פתרון</button>
+                    <div id="q13_solution" class="solution">
+                        <p>פונקציית זמן הריצה עדיין היא O(n), אך עם שיפור קבוע:</p>
+                        <ul>
+                            <li>במקרה הגרוע ביותר, עדיין נצטרך לעבור על כל איברי המערך (O(n)).</li>
+                            <li>השיפור הוא שלא צריך לבדוק תנאי יציאה בכל איטרציה (i < n), מכיוון שבוודאות נמצא את הערך (הרי שמנו אותו בסוף המערך).</li>
+                            <li>זה חוסך n בדיקות של תנאי הלולאה, אבל סיבוכיות האלגוריתם נשארת O(n).</li>
+                        </ul>
+                        <p>המימוש עשוי להיראות כך:</p>
+                        <div class="code">
+                            public static int ImprovedSearch(int[] arr, int k)<br>
+                            {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;int n = arr.Length;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;int last = arr[n-1]; // שמירת הערך האחרון<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;arr[n-1] = k; // שמים את הערך המבוקש בסוף<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;int i = 0;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;while (arr[i] != k)<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i++;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;arr[n-1] = last; // החזרת הערך המקורי<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;if (i < n-1 || k == last)<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return i; // נמצא במערך המקורי<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;else<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return -1; // לא נמצא במערך המקורי<br>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- שקף 14 (חלק 2 שקף 8) -->
+            <div class="slide" id="slide14">
+                <h2>השוואת היעילויות</h2>
+                <p>בשקף זה נלמד על השוואת יעילויות של אלגוריתמים שונים.</p>
+            </div>
+
+            <!-- שקף 15 (חלק 2 שקף 9) -->
+            <div class="slide" id="slide15">
+                <h2>מיון בועות</h2>
+                <p>פעולה זו מקבלת מערך וממיינת את הערכים בו בשיטה הנקראת מיון בועות.</p>
+                <p>הפעולה עובדת עם שתי לולאות מקוננות התלויות באורך המערך</p>
+                <div class="code">
+                    public static void BubbleSort(int[] arr)<br>
+                    {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;int n = arr.Length;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;for (int i = 0; i < n - 1; i++)<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (int j = 0; j < n - i - 1; j++)<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (arr[j] > arr[j + 1])<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// החלפת איברים<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int temp = arr[j];<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;arr[j] = arr[j + 1];<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;arr[j + 1] = temp;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    }
+                </div>
+                <div class="question">
+                    <p>מהי סיבוכיות זמן הריצה של מיון בועות?</p>
+                    <input type="text" id="q15_answer" placeholder="הקלד את תשובתך כאן...">
+                    <button onclick="checkAnswer('q15')">בדוק תשובה</button>
+                    <div id="q15_feedback" class="feedback"></div>
+                    <button class="solution-button" onclick="showSolution('q15_solution')">הצג פתרון</button>
+                    <div id="q15_solution" class="solution">
+                        <p>סיבוכיות זמן הריצה של מיון בועות היא O(n²).</p>
+                        <p>ניתוח מפורט:</p>
+                        <ul>
+                            <li>הלולאה החיצונית רצה (n-1) פעמים.</li>
+                            <li>הלולאה הפנימית רצה בפעם הראשונה (n-1) פעמים, בפעם השנייה (n-2) פעמים וכן הלאה.</li>
+                            <li>סך הכל מספר האיטרציות הוא (n-1) + (n-2) + ... + 2 + 1 = n(n-1)/2.</li>
+                            <li>לכן, סיבוכיות הזמן היא O(n²).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- שקף סיכום -->
+            <div class="slide" id="slide16">
+                <h2>סיכום - סיבוכיות זמן ריצה</h2>
+                <p>בשיעור זה למדנו:</p>
+                <ul>
+                    <li>כיצד מודדים יעילות של אלגוריתמים באמצעות ספירת פעולות יסוד</li>
+                    <li>הבנו את המשמעות של התלות בגודל הקלט (n)</li>
+                    <li>
+                        ראינו דוגמאות לאלגוריתמים בסיבוכיות שונה:
+                        <ul>
+                            <li>סיבוכיות O(n) - חיפוש ברשימה לא ממוינת</li>
+                            <li>סיבוכיות O(n²) - מיון בועות, חיפוש איברים משותפים בשני מערכים</li>
+                            <li>סיבוכיות O(n!) - בעיית הסוכן הנוסע</li>
+                        </ul>
+                    </li>
+                    <li>למדנו על שיפורים שניתן לבצע באלגוריתמים כדי להקטין את זמן הריצה</li>
+                </ul>
+                <p>כעת תוכלו להעריך את יעילות האלגוריתמים שאתם כותבים ולשפר אותם בהתאם לצורך!</p>
+            </div>
+
+            <div class="navigation">
+                <button id="prev-btn" onclick="prevSlide()">הקודם</button>
+                <button id="next-btn" onclick="nextSlide()">הבא</button>
+            </div>
+
+            <footer>
+                <p>אתר אינטראקטיבי ללימוד סיבוכיות זמן ריצה</p>
+            </footer>
+        </div>
+
+        <script>
+            let currentSlide = 1;
+            const totalSlides = 16;
+
+            function showSlide(slideNumber) {
+                // Hide all slides
+                const slides = document.querySelectorAll('.slide');
+                slides.forEach(slide => {
+                    slide.classList.remove('active');
+                });
+
+                // Show the current slide
+                document.getElementById('slide' + slideNumber).classList.add('active');
+
+                // Update progress bar
+                const progress = (slideNumber / totalSlides) * 100;
+                document.getElementById('progress-bar').style.width = progress + '%';
+                document.getElementById('progress-bar').textContent = Math.round(progress) + '%';
+
+                // Update navigation buttons
+                document.getElementById('prev-btn').disabled = (slideNumber <= 1);
+            }
+
+            function nextSlide() {
+                if (currentSlide < totalSlides) {
+                    currentSlide++;
+                    showSlide(currentSlide);
+                }
+            }
+
+            function prevSlide() {
+                if (currentSlide > 1) {
+                    currentSlide--;
+                    showSlide(currentSlide);
+                }
+            }
+
+            function checkAnswer(questionId) {
+                const answer = document.getElementById(questionId + '_answer').value.trim();
+                const feedback = document.getElementById(questionId + '_feedback');
+
+                // Simple validation logic - can be enhanced with more sophisticated checks
+                let isCorrect = false;
+                let feedbackText = '';
+
+                switch (questionId) {
+                    case 'q2':
+                        isCorrect = answer.includes('מסלול') && answer.includes('אלגוריתם') || answer.includes('יעילות');
+                        feedbackText = isCorrect ? 'נכון מאוד! Waze משתמשת באלגוריתמים לחיפוש מסלולים, ויעילות האלגוריתמים חשובה מאוד.' : 'נסה לחשוב על הקשר בין Waze לבין אלגוריתמים לחיפוש מסלולים.';
+                        break;
+
+                    case 'q3':
+                        isCorrect = answer.includes('סוכן') || answer.includes('נוסע') || answer.includes('TSP');
+                        feedbackText = isCorrect ? 'נכון! זוהי בעיית הסוכן הנוסע (Traveling Salesman Problem).' : 'נסה לחשוב על בעיה מפורסמת במדעי המחשב הקשורה לחיפוש מסלול מינימלי.';
+                        break;
+
+                    case 'q4':
+                        isCorrect = answer.includes('(n-1)') && answer.includes('!');
+                        feedbackText = isCorrect ? 'נכון מאוד! מספר המסלולים האפשריים הוא (n-1)! (עפרת).' : 'זכור שמנקודת המוצא יש (n-1) אפשרויות, ואז (n-2) וכן הלאה.';
+                        break;
+
+                    case 'q5':
+                        const answer1 = document.getElementById('q5_1_answer').value.trim();
+                        const answer2 = document.getElementById('q5_2_answer').value.trim();
+
+                        const isCorrect1 = answer1.includes('3,628,800') || answer1.includes('3628800');
+                        const isCorrect2 = answer2.includes('0.36') || answer2.includes('0.3') || answer2.includes('0.4');
+
+                        isCorrect = isCorrect1 && isCorrect2;
+                        feedbackText = isCorrect ? 'נכון מאוד! עבור 11 אתרים יש 3,628,800 מסלולים שלוקח כ-0.36 שניות לחשב.' : 'בדוק את החישוב שלך. עבור 11 אתרים, זה 10! מסלולים.';
+                        break;
+
+                    case 'q6':
+                        isCorrect = answer.includes('מסלול') && answer.includes('Waze') && answer.length > 20;
+                        feedbackText = isCorrect ? 'יפה! ניסחת שאלה טובה שתסייע להבין את האלגוריתם של Waze.' : 'נסה לנסח שאלה מפורטת יותר שתבקש הסבר על אלגוריתם חיפוש מסלולים של Waze.';
+                        break;
+
+                    case 'q10':
+                        isCorrect = answer.includes('O(n)') || answer.includes('3n') || answer.includes('3n+2') || answer.includes('3n+3');
+                        feedbackText = isCorrect ? 'נכון! סיבוכיות זמן הריצה במקרה הגרוע היא O(n), כלומר 3n+2 או 3n+3 פעולות.' : 'במקרה הגרוע, נצטרך לסרוק את כל המערך. מהי הסיבוכיות?';
+                        break;
+
+                    case 'q11':
+                        isCorrect = answer.includes('O(n²)') || answer.includes('O(n^2)') || answer.includes('n²') || answer.includes('n^2');
+                        feedbackText = isCorrect ? 'נכון מאוד! סיבוכיות הזמן היא O(n²) בגלל שתי הלולאות המקוננות.' : 'חשוב על שתי הלולאות המקוננות - כל אחת רצה n פעמים.';
+                        break;
+
+                    case 'q12':
+                        isCorrect = answer.includes('arr.Length') && !answer.includes('int n');
+                        feedbackText = isCorrect ? 'נכון! ניתן להשתמש ישירות ב-arr.Length בתנאי הלולאה במקום לאחסן אותו במשתנה נפרד.' : 'חשוב איך ניתן להימנע מהשימוש במשתנה n.';
+                        break;
+
+                    case 'q13':
+                        isCorrect = answer.includes('O(n)');
+                        feedbackText = isCorrect ? 'נכון! גם לאחר השיפור, סיבוכיות הזמן נשארת O(n), אך עם שיפור בקבוע.' : 'למרות השיפור, במקרה הגרוע עדיין נצטרך לעבור על כל האיברים.';
+                        break;
+
+                    case 'q15':
+                        isCorrect = answer.includes('O(n²)') || answer.includes('O(n^2)') || answer.includes('n²') || answer.includes('n^2');
+                        feedbackText = isCorrect ? 'נכון מאוד! סיבוכיות זמן הריצה של מיון בועות היא O(n²).' : 'חשוב על שתי הלולאות המקוננות ומספר הפעמים שהן רצות.';
+                        break;
+
+                    default:
+                        feedbackText = 'אנא נסה שוב.';
+                        break;
+                }
+
+                // Display feedback
+                feedback.textContent = feedbackText;
+                feedback.className = 'feedback ' + (isCorrect ? 'correct' : 'incorrect');
+                feedback.style.display = 'block';
+            }
+
+            function showSolution(solutionId) {
+                const solution = document.getElementById(solutionId);
+                solution.style.display = solution.style.display === 'block' ? 'none' : 'block';
+            }
+
+            // Initialize
+            document.addEventListener('DOMContentLoaded', function () {
+                showSlide(currentSlide);
+            });
+        </script>
+</body>
+</html> 
